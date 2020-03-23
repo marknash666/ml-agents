@@ -59,12 +59,12 @@ FoodCollector:
 
 Bouncer:
     normalize: true
-    max_steps: 7.0e6
+    max_steps: 4.0e6
     num_layers: 2
     hidden_units: 64
 
 PushBlock:
-    max_steps: 1.5e7
+    max_steps: 2.0e6
     batch_size: 128
     buffer_size: 2048
     beta: 1.0e-2
@@ -147,7 +147,7 @@ VisualPyramids:
     buffer_size: 12000
     summary_freq: 12000
     time_horizon: 1000
-    max_steps: 5.0e5
+    max_steps: 5.0e6
     beta: 0.001
     reward_signals:
         extrinsic:
