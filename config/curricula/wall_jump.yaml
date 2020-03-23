@@ -1,6 +1,6 @@
 BigWallJump:
-  measure: progress
-  thresholds: [0.1, 0.3, 0.5]
+  measure: reward
+  thresholds: [0.5, 0.8, 0.8]
   min_lesson_length: 100
   signal_smoothing: true
   parameters:
@@ -8,8 +8,8 @@ BigWallJump:
     big_wall_max_height: [4.0, 7.0, 8.0, 8.0]
 
 SmallWallJump:
-  measure: progress
-  thresholds: [0.1, 0.3, 0.5]
+  measure: reward
+  thresholds: [0.5, 0.6, 0.8]
   min_lesson_length: 100
   signal_smoothing: true
   parameters:
