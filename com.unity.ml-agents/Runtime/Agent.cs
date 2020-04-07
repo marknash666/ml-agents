@@ -159,7 +159,7 @@ namespace MLAgents
         bool m_RequestAction;
 
         /// Whether or not the agent requests a decision.
-        bool m_RequestDecision;
+        protected bool m_RequestDecision;
 
         /// Keeps track of the number of steps taken by the agent in this episode.
         /// Note that this value is different for each agent, and may not overlap
@@ -275,7 +275,7 @@ namespace MLAgents
         /// <summary>
         /// Reason that the Agent is being considered "done"
         /// </summary>
-        enum DoneReason
+        public enum DoneReason
         {
             /// <summary>
             /// The <see cref="Done"/> method was called.
@@ -315,7 +315,7 @@ namespace MLAgents
             m_Initialized = false;
         }
 
-        void NotifyAgentDone(DoneReason doneReason)
+        public virtual void NotifyAgentDone(DoneReason doneReason)
         {
             m_Info.episodeId = m_EpisodeId;
             m_Info.reward = m_Reward;
@@ -783,7 +783,7 @@ namespace MLAgents
         /// <summary>
         /// Signals the agent that it must sent its decision to the brain.
         /// </summary>
-        void SendInfo()
+        public virtual void SendInfo()
         {
             // If the Agent is done, it has just reset and thus requires a new decision
             if (m_RequestDecision)
