@@ -34,8 +34,24 @@ WarriorLearning3223:
     num_layers: 2
     summary_freq: 20000  
 
-WarriorLearning:
+Shooter:
     max_steps: 5e6
+    batch_size: 1280
+    buffer_size: 20480
+    beta: 5.0e-3
+    hidden_units: 256
+    summary_freq: 20000
+    time_horizon: 128
+    num_layers: 2
+    normalize: false
+    self_play:
+        window: 10      
+        play_against_current_self_ratio: 0.5
+        save_steps: 50000
+        swap_steps: 50000
+
+Warrior:
+    max_steps: 5e7
     batch_size: 1280
     buffer_size: 20480
     beta: 5.0e-3

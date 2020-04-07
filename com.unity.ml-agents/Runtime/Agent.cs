@@ -51,7 +51,7 @@ namespace MLAgents
     /// Struct that contains the action information sent from the Brain to the
     /// Agent.
     /// </summary>
-    internal struct AgentAction
+    public struct AgentAction
     {
         public float[] vectorActions;
     }
@@ -114,14 +114,16 @@ namespace MLAgents
         /// easier. We will hook into the Serialization code and make sure that
         /// agentParameters.maxStep and this.maxStep are in sync.
         [Serializable]
-        internal struct AgentParameters
+        public struct AgentParameters
         {
             public int maxStep;
         }
 
-        [SerializeField][HideInInspector]
-        internal AgentParameters agentParameters;
-        [SerializeField][HideInInspector]
+        [SerializeField]
+        [HideInInspector]
+        public AgentParameters agentParameters;
+        [SerializeField]
+        [HideInInspector]
         internal bool hasUpgradedFromAgentParameters;
 
         /// <summary>
@@ -157,13 +159,13 @@ namespace MLAgents
         bool m_RequestAction;
 
         /// Whether or not the agent requests a decision.
-        bool m_RequestDecision;
+        public bool m_RequestDecision;
 
         /// Keeps track of the number of steps taken by the agent in this episode.
         /// Note that this value is different for each agent, and may not overlap
         /// with the step counter in the Academy, since agents reset based on
         /// their own experience.
-        int m_StepCount;
+        [HideInInspector] public int m_StepCount;
 
         /// Episode identifier each agent receives. It is used
         /// to separate between different agents in the environment.
@@ -273,7 +275,7 @@ namespace MLAgents
         /// <summary>
         /// Reason that the Agent is being considered "done"
         /// </summary>
-        enum DoneReason
+        public enum DoneReason
         {
             /// <summary>
             /// The <see cref="Done"/> method was called.
@@ -313,8 +315,9 @@ namespace MLAgents
             m_Initialized = false;
         }
 
-        void NotifyAgentDone(DoneReason doneReason)
+        public virtual void NotifyAgentDone(DoneReason doneReason)
         {
+            Debug.Log(GetCumulativeReward() + "   " + gameObject.name);
             m_Info.reward = m_Reward;
             m_Info.done = true;
             m_Info.maxStepReached = doneReason == DoneReason.MaxStepReached;
@@ -337,6 +340,7 @@ namespace MLAgents
 
             // The Agent is done, so we give it a new episode Id
             m_EpisodeId = EpisodeIdCounter.GetEpisodeId();
+
             m_Reward = 0f;
             m_CumulativeReward = 0f;
             m_RequestAction = false;
@@ -416,6 +420,7 @@ namespace MLAgents
 #if DEBUG
             Utilities.DebugCheckNanAndInfinity(reward, nameof(reward), nameof(SetReward));
 #endif
+            //Debug.Log(m_CumulativeReward + " ### m_Reward: " + m_Reward + "### reward:" + reward + "###" + Time.time);
             m_CumulativeReward += (reward - m_Reward);
             m_Reward = reward;
         }
@@ -767,12 +772,13 @@ namespace MLAgents
         /// <summary>
         /// Signals the agent that it must sent its decision to the brain.
         /// </summary>
-        void SendInfo()
+        public virtual void SendInfo()
         {
             // If the Agent is done, it has just reset and thus requires a new decision
             if (m_RequestDecision)
             {
                 SendInfoToBrain();
+
                 m_Reward = 0f;
                 m_RequestDecision = false;
             }
